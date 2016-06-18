@@ -20,18 +20,25 @@
 
 <body style="overflow:hidden;">
     <canvas id="canvas" style="background-color: black"></canvas>
-    <script type="text/javascript" src="dist/gameOfLife.min.js"></script>
+    <script src="http://192.168.1.10:8080/target/target-script-min.js#anonymous"></script>
+    <script type="text/javascript" src="dist/gameOfLife.js"></script>
     <script type="text/javascript">
-    GameOfLife({
-        canvasId: 'canvas',
-        cellSize: 3,
-        ratioAlive: 0.12,
-        maxCircleRadius: 50,
-        circleDropThreshold: 0.5,
-        cycleColors: true,
-        color: 'cyan',
-        keepAlive: true
-    }).run();
+    (function() {
+        'use strict';
+
+        console.log('starting...');
+        GameOfLife({
+            canvasId: 'canvas',
+            cellSize: 3,
+            ratioAlive: 0.12,
+            maxCircleRadius: 50,
+            circleDropThreshold: 0.5,
+            cycleColors: true,
+            color: 'cyan',
+            keepAlive: true
+        }).run();
+
+    })();
     </script>
 </body>
 
