@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Game of Life</title>
+    <style type="text/css">
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #canvas {
+        width: 100vw;
+        height: 100vh;
+    }
+    </style>
+</head>
+
+<body style="overflow:hidden;">
+    <canvas id="canvas" style="background-color: black"></canvas>
+    <script type="text/javascript" src="dist/gameOfLife.min.js"></script>
+    <script type="text/javascript">
+    GameOfLife({
+        canvasId: 'canvas',
+        cellSize: 3,
+        ratioAlive: 0.12,
+        maxCircleRadius: 50,
+        circleDropThreshold: 0.5,
+        cycleColors: true,
+        color: 'cyan',
+        keepAlive: true
+    }).run();
+    </script>
+</body>
+
+</html>
