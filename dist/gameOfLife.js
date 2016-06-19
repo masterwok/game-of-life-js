@@ -369,27 +369,38 @@ var GameOfLife = function(config) {
         }, 100);
     };
 
+    var previousWidth, previousHeight;
+
     var resizeCanvas = function() {
-        canvas.width = canvas.parentElement.clientWidth;
-        canvas.height = canvas.parentElement.clientHeight;
+        // Only resize if the container width/height no longer match that of the canvas.
+        // This fixes a bug where mobile chrome url bar hiding was reseting the generation.
+        if (canvas.width !== previousWidth || canvas.height !== previousHeight) {
+            previousWidth = canvas.width;
+            previousHeight = canvas.height;
 
-        // When the container is resized, create a new grid
-        grid = new Grid(canvas, ctx, config.cellSize);
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
 
-        dropCircleAtCount = Math.floor((grid.nRow * grid.nCol * config.ratioAlive * config.circleDropThreshold));
+            // When the container is resized, create a new grid
+            grid = new Grid(canvas, ctx, config.cellSize);
 
-        if (!config.cycleColors) {
-            cellColor = config.color;
+            dropCircleAtCount = Math.floor((grid.nRow * grid.nCol * config.ratioAlive * config.circleDropThreshold));
+
+            if (!config.cycleColors) {
+                cellColor = config.color;
+            }
+
+            // Initialize the cells array
+            cells = new Array(grid.nRow);
+            for (var i = 0; i < grid.nRow; i++) {
+                cells[i] = new Array(grid.nCol);
+            }
+
+            // Start new render interval
+            startNewInterval();
+
         }
 
-        // Initialize the cells array
-        cells = new Array(grid.nRow);
-        for (var i = 0; i < grid.nRow; i++) {
-            cells[i] = new Array(grid.nCol);
-        }
-
-        // Start new render interval
-        startNewInterval();
     };
 
     var run = function() {
