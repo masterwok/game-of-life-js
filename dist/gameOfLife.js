@@ -369,45 +369,34 @@ var GameOfLife = function(config) {
         }, 100);
     };
 
-    var previousWidth, previousHeight;
-
     var resizeCanvas = function() {
-        // Only resize if the container width/height no longer match that of the canvas.
-        // This fixes a bug where mobile chrome url bar hiding was reseting the generation.
-        if (canvas.width !== previousWidth || canvas.height !== previousHeight) {
-            previousWidth = canvas.width;
-            previousHeight = canvas.height;
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
 
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
+        // When the container is resized, create a new grid
+        grid = new Grid(canvas, ctx, config.cellSize);
 
-            // When the container is resized, create a new grid
-            grid = new Grid(canvas, ctx, config.cellSize);
+        dropCircleAtCount = Math.floor((grid.nRow * grid.nCol * config.ratioAlive * config.circleDropThreshold));
 
-            dropCircleAtCount = Math.floor((grid.nRow * grid.nCol * config.ratioAlive * config.circleDropThreshold));
-
-            if (!config.cycleColors) {
-                cellColor = config.color;
-            }
-
-            // Initialize the cells array
-            cells = new Array(grid.nRow);
-            for (var i = 0; i < grid.nRow; i++) {
-                cells[i] = new Array(grid.nCol);
-            }
-
-            // Start new render interval
-            startNewInterval();
-
+        if (!config.cycleColors) {
+            cellColor = config.color;
         }
 
+        // Initialize the cells array
+        cells = new Array(grid.nRow);
+        for (var i = 0; i < grid.nRow; i++) {
+            cells[i] = new Array(grid.nCol);
+        }
+
+        // Start new render interval
+        startNewInterval();
     };
 
     var run = function() {
-        // // resize the canvas to fill browser window dynamically
+        // resize the canvas to fill browser window dynamically
         window.addEventListener('resize', resizeCanvas, false);
 
-        // // Initial canvas resize
+        // Initial canvas resize
         resizeCanvas();
     };
 
